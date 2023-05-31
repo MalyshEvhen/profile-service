@@ -1,6 +1,9 @@
 package ua.malysh.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,6 +25,8 @@ import ua.malysh.domain.Physique;
 import ua.malysh.domain.UserProfile;
 import ua.malysh.service.DietCalculatorService;
 import ua.malysh.service.UserProfileService;
+import ua.malysh.service.exceptions.ProfileAlreadyExistsException;
+import ua.malysh.service.exceptions.ProfileNotFoundException;
 import ua.malysh.service.impl.DietCalculatorServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
@@ -62,13 +67,46 @@ public class UserProfileControllerTest {
     }
 
     @Test
-    void shouldSaveValidUserProfile() throws Exception {
-        when(profileService.save(profile)).thenReturn(1L);
+    void shouldReturnStatusCreated() throws Exception {
+        when(profileService.save(profile))
+                .thenReturn(1L);
 
         mockMvc.perform(post(URL)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(profile)))
-        .andExpect(status().isCreated())
-        .andDo(print());
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(profile)))
+            .andExpect(status().isCreated())
+            .andDo(print());
+    }
+
+    @Test
+    void shouldReturnBadRequest() throws Exception {
+        when(profileService.save(any(UserProfile.class)))
+                .thenThrow(ProfileAlreadyExistsException.class);
+
+        mockMvc.perform(post(URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(profile)))
+            .andExpect(status().isBadRequest())
+            .andDo(print());
+    }
+
+    @Test
+    void shouldReturnStatusOk() throws Exception {
+        when(profileService.findByUserId(profile.getUserId())).thenReturn(profile);
+
+        mockMvc.perform(get(URL + "/by-user").param("userId", "1"))
+            .andExpect(status().isOk())
+            .andDo(print());
+    }
+
+    @Test
+    void shouldReturnNotFound() throws Exception {
+        when(profileService.findByUserId(anyLong()))
+            .thenThrow(ProfileNotFoundException.class);
+
+        mockMvc.perform(get(URL + "/by-user")
+                .param("userId", "1"))
+            .andExpect(status().isNotFound())
+            .andDo(print());
     }
 }
