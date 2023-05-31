@@ -1,12 +1,17 @@
 package ua.malysh.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import ua.malysh.domain.Diet;
 import ua.malysh.domain.DietType;
 import ua.malysh.domain.Gender;
 import ua.malysh.domain.Physique;
+import ua.malysh.service.DietCalculatorService;
 
-public class DietCalculatorService {
+@Service
+public class DietCalculatorServiceImpl implements DietCalculatorService {
 
+    @Override
     public Diet getDiet(Physique physiques, DietType dietType) {
         if (physiques == null)
             return getDefaultDiet();

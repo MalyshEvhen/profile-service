@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import ua.malysh.domain.UserProfile;
 import ua.malysh.repository.UserProfileRepository;
+import ua.malysh.service.DietCalculatorService;
 import ua.malysh.service.UserProfileService;
 import ua.malysh.service.exceptions.ProfileAlreadyExistsException;
 import ua.malysh.service.exceptions.ProfileNotFoundException;
