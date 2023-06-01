@@ -26,4 +26,8 @@ public class Physique {
 
     @Column(name = "hight")
     private Double hight;
+
+    @Column(name = "activity_level")
+    @Enumerated(EnumType.STRING)
+    private ActivityLevel activityLevel;
 }
