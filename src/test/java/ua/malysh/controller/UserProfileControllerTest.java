@@ -31,7 +31,7 @@ import ua.malysh.service.impl.DietCalculatorServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = UserProfileController.class)
-public class UserProfileControllerTest {
+class UserProfileControllerTest {
     private static final String URL = "/api/v1/user-profiles";
 
     @MockBean
