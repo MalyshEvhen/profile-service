@@ -45,11 +45,25 @@ public class UserProfile {
     private Physique physique;
 
     @Embedded
-    private Diet diet;
+    private Diet diet = Diet.getDefault();
 
+    @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column(name = "modified_at")
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private LocalDateTime modifiedAt;
+
+    public void setDietType(DietType type) {
+        this.diet.setType(type);
+    }
+
+    public void setActivityLevel(ActivityLevel level) {
+        this.physique.setActivityLevel(level);
+    }
+
+    public void setWeight(Double weight) {
+        this.physique.setWeight(weight);
+    }
 }
