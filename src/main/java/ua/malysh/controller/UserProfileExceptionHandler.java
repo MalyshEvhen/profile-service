@@ -16,17 +16,13 @@ public class UserProfileExceptionHandler extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler(value = { ProfileNotFoundException.class })
     protected ResponseEntity<Object> handleNotFound(RuntimeException ex, WebRequest request) {
-        String bodyOfResponse = "Profile not found.";
-
-        return handleExceptionInternal(ex, bodyOfResponse,
+        return handleExceptionInternal(ex, ex.getMessage(),
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = { ProfileAlreadyExistsException.class })
     protected ResponseEntity<Object> handleAlreadyExists(RuntimeException ex, WebRequest request) {
-        String bodyOfResponse = "For this User profile is already exists.";
-
-        return handleExceptionInternal(ex, bodyOfResponse,
+        return handleExceptionInternal(ex, ex.getMessage(),
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }
