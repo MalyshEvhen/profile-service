@@ -24,8 +24,8 @@ public class Physique {
     @Column(name = "weight")
     private Double weight;
 
-    @Column(name = "hight")
-    private Double hight;
+    @Column(name = "height")
+    private Double height;
 
     @Column(name = "activity_level")
     @Enumerated(EnumType.STRING)

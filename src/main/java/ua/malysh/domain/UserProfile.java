@@ -20,10 +20,12 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "user_profiles",
-       indexes = {
-            @Index(name = "idx_user_profiles_user_id", columnList = "user_id")})
+        indexes = {
+                @Index(name = "idx_user_profiles_user_id", columnList = "user_id"),
+                @Index(name = "idx_user_profiles_username", columnList = "username")})
 @NoArgsConstructor
-@Setter @Getter
+@Setter
+@Getter
 public class UserProfile {
 
     @Id
@@ -36,6 +38,11 @@ public class UserProfile {
             nullable = false,
             unique = true)
     private Long userId;
+
+    @Column(name = "username",
+            nullable = false,
+            unique = true)
+    private String username;
 
     @Column(name = "profile_name",
             nullable = false)

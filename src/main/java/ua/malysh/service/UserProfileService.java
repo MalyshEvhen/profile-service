@@ -6,6 +6,6 @@ public interface UserProfileService {
 
     Long save(UserProfile profile);
 
-    UserProfile findByUserId(Long userId);
+    UserProfile findByUsername(String username);
 
 }

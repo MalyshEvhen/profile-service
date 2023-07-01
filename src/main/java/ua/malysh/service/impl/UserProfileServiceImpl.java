@@ -35,14 +35,13 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfile findByUserId(Long userId) {
-        return repository.findByUserId(userId)
+    public UserProfile findByUsername(String username) {
+        return repository.findByUsername(username)
                 .orElseThrow(notFundExceptionSupplier());
     }
 
     private boolean isUserHasProfile(UserProfile profile) {
-        return repository.findByUserId(profile.getUserId())
-                .isPresent();
+        return repository.existsByUsername(profile.getUsername());
     }
 
     private Supplier<? extends ProfileNotFoundException> notFundExceptionSupplier() {
